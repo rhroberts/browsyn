@@ -1,9 +1,13 @@
-import './App.css';
+import "./App.css";
+import Knob from "./components/knob/Knob";
 
 function App() {
   return (
     <div className="App">
-      Hello
+      <div>Hello</div>
+      <div>
+        <Knob />
+      </div>
     </div>
   );
 }

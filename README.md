@@ -19,4 +19,10 @@ Name is TBD. A web-based synthesizer.
 - Accent 2: #56eca6
 - Accent 3: #3dbdd4
 
+## Assets
+
+- [ ] Knob
+- [ ] Button
+- [ ] Logo/Favicon
+
 ## Outstanding Questions
