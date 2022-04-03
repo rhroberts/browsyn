@@ -20,14 +20,40 @@ strike though...
 - MIDI input?
   - Otherwise would need to provide a keyboard...
     - Might need this regardless for better useability and prototyping
-- Monophonic
+  - I added a keyboard, but I'm struggling to find a good way to abstract out
+    the actual synthesis part from the keyboard component...
+    - For now, just going to keep any callbacks in a separate file and try to
+      write them such that they aren't keyboard specific and could take MIDI
+      data
+      - Will write the actual MIDI functionality later, though
+- Monophonic?
+  - The way the Web Audio API works, this might not actually be very
+    straightforward.
+    - AFAIK no way to check if an OscillatorNode is playing to determinine
+      whether or not to stop it when a new note is played
+    - Can't just suspend the AudioContext, as it will continue from it's
+      previous state once resumed and the original note will keep playing
 - Two or three oscillators
   - each oscillator can be one of triangle, square, sin, etc. wave
-- FilterS
+- Amplitude Envelope
+  - Good example
+    [here](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Advanced_techniques)
+  - `GainNode`
+- Filters
+  - Gain
+    - `GainNode`
   - Delay
+    - `DelayNode`
   - Reverb
+    - `ConvolverNode`
+  - Low-Pass Filter
+    - `BiquadFilterNode`
+  - Distortion
+    - `WaveShaperNode`
   - (maybe) Compression
-- Envelopes?
+    - `DynamicsCompressorNode`
+    - I doubt this will have a major effect on the sound, given that the levels
+      generated from the `OscillatorNode` will be rather even.
 
 ### Application
 
@@ -55,3 +81,7 @@ strike though...
   - [x] Black Key
 
 ## Outstanding Questions
+
+- Translating knob rotation to usable value
+- Reproducing a monophonic behavior
+- External MIDI input
