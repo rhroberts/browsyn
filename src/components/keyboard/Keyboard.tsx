@@ -5,6 +5,7 @@ import { ReactComponent as WhiteKeyBlackRightSvg } from "./whitekey_blackright.s
 import { ReactComponent as WhiteKeyBlackLeftRightSvg } from "./whitekey_blackleftright.svg";
 import styles from "./Keyboard.module.css";
 import { noteToFreq } from "./utils";
+import { audioCtx } from "../../App";
 import { FC } from "react";
 
 function Keyboard(props: { octave: number }) {
@@ -40,13 +41,20 @@ function Keyboard(props: { octave: number }) {
   );
 }
 
+function playNote(freq: number) {
+  const osc1 = new OscillatorNode(audioCtx, {
+    type: "square",
+    frequency: freq,
+  });
+  osc1.connect(audioCtx.destination);
+  osc1.start();
+  setTimeout(() => osc1.stop(), 1000);
+}
+
 function Key(props: { octave: number; note: string; keyComponent: FC }) {
   const freq = noteToFreq(props.octave, props.note);
   return (
-    <button
-      className={styles.keyButton}
-      onClick={() => console.log(props.note)}
-    >
+    <button className={styles.keyButton} onClick={() => playNote(freq)}>
       <props.keyComponent />
     </button>
   );

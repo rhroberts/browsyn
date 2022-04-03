@@ -2,7 +2,9 @@ import "./App.css";
 import Keyboard from "./components/keyboard/Keyboard";
 import Knob from "./components/knob/Knob";
 
-let octave = 4;
+var audioCtx = new AudioContext();
+
+let octave = 2;
 
 function App() {
   return (
@@ -13,5 +15,7 @@ function App() {
     </div>
   );
 }
+console.log(audioCtx.state);
 
 export default App;
+export { audioCtx };
