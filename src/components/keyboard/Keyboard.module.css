@@ -4,7 +4,16 @@
   padding: 6px;
   border: 3px solid black;
   border-radius: 6px;
-  font-size: 0px;
+  font-size: 0;
+}
+
+.keyButton {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  font-size: 0;
+  border: none;
+  background-color: #999999;
 }
 
 .blackKey {

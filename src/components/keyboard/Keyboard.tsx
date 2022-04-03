@@ -18,7 +18,7 @@ function Keyboard(props: { octave: number }) {
       <Key octave={octave} note="E" keyComponent={WhiteKeyBlackLeft} />
       <Key octave={octave} note="F" keyComponent={WhiteKeyBlackRight} />
       <Key octave={octave} note="F#" keyComponent={BlackKey} />
-      <Key octave={octave} note="G" keyComponent={WhiteKeyBlackLeft} />
+      <Key octave={octave} note="G" keyComponent={WhiteKeyBlackLeftRight} />
       <Key octave={octave} note="G#" keyComponent={BlackKey} />
       <Key octave={octave} note="A" keyComponent={WhiteKeyBlackLeftRight} />
       <Key octave={octave} note="A#" keyComponent={BlackKey} />
@@ -42,8 +42,14 @@ function Keyboard(props: { octave: number }) {
 
 function Key(props: { octave: number; note: string; keyComponent: FC }) {
   const freq = noteToFreq(props.octave, props.note);
-  console.log(freq);
-  return <props.keyComponent />;
+  return (
+    <button
+      className={styles.keyButton}
+      onClick={() => console.log(props.note)}
+    >
+      <props.keyComponent />
+    </button>
+  );
 }
 
 function BlackKey() {
