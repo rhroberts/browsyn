@@ -15,7 +15,6 @@ function App() {
     </div>
   );
 }
-console.log(audioCtx.state);
 
 export default App;
 export { audioCtx };

@@ -1,11 +1,8 @@
 import { ReactComponent as KnobSvg } from "./knob.svg";
+import styles from "./Knob.module.css";
 
 function Knob() {
-  return (
-    <div className="knob">
-      <KnobSvg />
-    </div>
-  );
+  return <KnobSvg className={styles.dial} />;
 }
 
 export default Knob;

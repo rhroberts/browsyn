@@ -7,7 +7,8 @@ const { optimize } = require("svgo");
 // { "source": "dest"}
 const svgMap = {
   "./assets/favicon.svg": "./public/favicon.svg",
-  "./assets/knob.svg": "./src/components/knob/knob.svg",
+  // optimizing manually in inkscape for now, to preserve CSS IDs
+  // "./assets/knob.svg": "./src/components/knob/knob.svg",
   "./assets/blackkey.svg": "./src/components/keyboard/blackkey.svg",
   "./assets/whitekey.svg": "./src/components/keyboard/whitekey.svg",
   "./assets/whitekey_blackleft.svg":
