@@ -10,17 +10,8 @@ function halfStepsFromMiddleA(octave: number, note: string) {
   // given the octave and name of a note, return the number of half steps that
   // note is away from middle A. (What we refer to as "middle A" is the 9th index
   // of the 4th octave.)
-  const midAOctave = 4;
-  const midAIndex = 9;
   const noteIndex = notes.indexOf(note);
-  const sign =
-    octave < midAOctave || (octave === midAOctave && noteIndex < midAIndex)
-      ? -1
-      : 1;
-  return (
-    sign *
-    (12 * Math.abs(midAOctave - octave) + Math.abs(midAIndex - noteIndex))
-  );
+  return 12 * (octave - 4) + (noteIndex - 9);
 }
 
 export { noteToFreq, halfStepsFromMiddleA };
