@@ -83,5 +83,13 @@ strike though...
 ## Outstanding Questions
 
 - Translating knob rotation to usable value
+  - I've got the rotation bit figured out with the SVG
+  - However, tracking the mouse events will be interesting...
+    - Can add a callback for the `mousedown` event on the SVG element
+    - But typically the user will drag outside of the element to change the
+      value, so the `mousemove` and `mouseup` events needs to be on the document
+      or some other higher up element
+      - need to track initial XY coords and track distance dragged while
+        converting to degrees for the knob itself
 - Reproducing a monophonic behavior
 - External MIDI input
