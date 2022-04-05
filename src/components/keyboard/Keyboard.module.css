@@ -1,44 +1,14 @@
 #keyboard {
-  display: flex;
-  background-color: #999999;
-  padding: 6px;
-  border: 3px solid black;
-  border-radius: 6px;
-  font-size: 0;
 }
 
-.keyButton {
-  display: flex;
-  margin: 0;
-  padding: 0;
-  font-size: 0;
-  border: none;
-  background-color: #999999;
-  height: max-content;
+.key {
+  cursor: pointer;
 }
 
-.blackKey {
-  /*border: 1px solid blue;*/
-  margin-left: -8px;
-  margin-right: -8px;
-  z-index: 2;
+.key:hover {
+  fill: #999;
 }
 
-.whiteKey {
-  margin-left: 2px;
-  margin-right: 2px;
-  z-index: 1;
-}
-
-.whiteKeyBlackLeft {
-  z-index: 1;
-}
-
-.whiteKeyBlackRight {
-  margin-left: 2px;
-  z-index: 1;
-}
-
-.whiteKeyBlackLeftRight {
-  z-index: 1;
+.key:active {
+  fill: red;
 }

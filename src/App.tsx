@@ -4,14 +4,14 @@ import Knob from "./components/knob/Knob";
 
 var audioCtx = new AudioContext();
 
-let octave = 2;
+let octave = 3;
 
 function App() {
   return (
     <div className="App">
       <div>Hello</div>
-      <Knob />
-      <Keyboard octave={octave} />
+      <Knob width={100} />
+      <Keyboard height={100} width={350} octave={octave} />
     </div>
   );
 }
