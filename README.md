@@ -29,8 +29,8 @@ strike though...
 - Monophonic?
   - The way the Web Audio API works, this might not actually be very
     straightforward.
-    - AFAIK no way to check if an OscillatorNode is playing to determinine
-      whether or not to stop it when a new note is played
+    - AFAIK no way to check if an OscillatorNode is playing to determine whether
+      or not to stop it when a new note is played
     - Can't just suspend the AudioContext, as it will continue from it's
       previous state once resumed and the original note will keep playing
 - Two or three oscillators
@@ -68,17 +68,11 @@ strike though...
 ## Assets
 
 - [x] Knob
-  - [x] Knob itself
-  - [x] Outer dial
+  - `src/components/knob/Knob.tsx`
 - [ ] Button
 - [x] Logo/Favicon
 - [x] Keyboard (25-key)
-  - [x] White Keys
-    - [x] Black to left
-    - [x] Black to right
-    - [x] Black to left and right
-    - [x] No Black
-  - [x] Black Key
+  - `src/components/keyboard/Keyboard.tsx`
 
 ## Outstanding Questions
 
