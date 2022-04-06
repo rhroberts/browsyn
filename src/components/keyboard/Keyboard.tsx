@@ -26,8 +26,7 @@ function Keyboard({
   const keyWidth = width / 15; // specific to a 25-key keyboard
   const blackKeyHeight = keyHeight * 0.55;
   const blackKeyWidth = keyWidth * 0.65;
-  let whiteKeys: ReactElement[] = [];
-  [
+  let whiteKeys: ReactElement[] = [
     "C",
     "D",
     "E",
@@ -43,35 +42,45 @@ function Keyboard({
     "A",
     "B",
     "C",
-  ].forEach((note, idx) => {
+  ].map((note, idx) => {
     let oct = octave + Math.floor(idx / 7);
-    whiteKeys.push(
+    return (
       <Key
         octave={oct}
         note={note}
         keyHeight={keyHeight}
         keyWidth={keyWidth}
         xPos={keyWidth * idx}
+        key={`${note}${oct}`} // unique component identifier
       />
     );
   });
-  let blackKeys: ReactElement[] = [];
   let skip = 0;
-  ["C#", "D#", "F#", "G#", "A#", "C#", "D#", "F#", "G#", "A#"].forEach(
-    (note, idx) => {
-      let oct = octave + Math.floor(idx / 5);
-      if ([2, 5, 7].includes(idx)) skip++;
-      blackKeys.push(
-        <Key
-          octave={oct}
-          note={note}
-          keyHeight={blackKeyHeight}
-          keyWidth={blackKeyWidth}
-          xPos={keyWidth * (idx + 1 + skip) - keyWidth / 3}
-        />
-      );
-    }
-  );
+  let blackKeys: ReactElement[] = [
+    "C#",
+    "D#",
+    "F#",
+    "G#",
+    "A#",
+    "C#",
+    "D#",
+    "F#",
+    "G#",
+    "A#",
+  ].map((note, idx) => {
+    let oct = octave + Math.floor(idx / 5);
+    if ([2, 5, 7].includes(idx)) skip++;
+    return (
+      <Key
+        octave={oct}
+        note={note}
+        keyHeight={blackKeyHeight}
+        keyWidth={blackKeyWidth}
+        xPos={keyWidth * (idx + 1 + skip) - keyWidth / 3}
+        key={`${note}${oct}`} // unique component identifier
+      />
+    );
+  });
   return (
     <div id={styles.keyboard}>
       <svg height={height} width={width} stroke="#2f2f2f">

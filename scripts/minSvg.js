@@ -7,16 +7,6 @@ const { optimize } = require("svgo");
 // { "source": "dest"}
 const svgMap = {
   "./assets/favicon.svg": "./public/favicon.svg",
-  // optimizing manually in inkscape for now, to preserve CSS IDs
-  // "./assets/knob.svg": "./src/components/knob/knob.svg",
-  "./assets/blackkey.svg": "./src/components/keyboard/blackkey.svg",
-  "./assets/whitekey.svg": "./src/components/keyboard/whitekey.svg",
-  "./assets/whitekey_blackleft.svg":
-    "./src/components/keyboard/whitekey_blackleft.svg",
-  "./assets/whitekey_blackright.svg":
-    "./src/components/keyboard/whitekey_blackright.svg",
-  "./assets/whitekey_blackleftright.svg":
-    "./src/components/keyboard/whitekey_blackleftright.svg",
 };
 
 for (let f in svgMap) {

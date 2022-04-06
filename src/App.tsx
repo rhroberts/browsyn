@@ -10,7 +10,7 @@ function App() {
   return (
     <div className="App">
       <div>Hello</div>
-      <Knob width={100} />
+      <Knob width={75} />
       <Keyboard height={100} width={350} octave={octave} />
     </div>
   );
