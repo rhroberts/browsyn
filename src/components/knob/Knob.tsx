@@ -1,11 +1,16 @@
 import styles from "./Knob.module.css";
 
-function mouseDownCallback(e: any, name: string) {
-  console.log(`${name.toUpperCase()} knob pressed!`);
-  console.log(e);
-}
-
-function Knob({ name, width }: { name: string; width: number }) {
+function Knob({
+  name,
+  value, // need to translate to rotation
+  onMouseDown,
+  width,
+}: {
+  name: string;
+  value: number;
+  onMouseDown: Function;
+  width: number;
+}) {
   const oct = width * (Math.sqrt(2) / 2); // special coordinate of octagon
   const dialPad = width * 0.025; // padding distance b/w dial and knob
   const dialLength = width * 0.2; // length of dial line
@@ -18,7 +23,7 @@ function Knob({ name, width }: { name: string; width: number }) {
         width={width}
         height={width}
         xmlns="http://www.w3.org/2000/svg"
-        onMouseDown={(e) => mouseDownCallback(e, name)}
+        onMouseDown={(e) => onMouseDown(e)}
       >
         <rect width="100%" height="100%" fill="transparent" />
         <g

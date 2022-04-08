@@ -1,6 +1,6 @@
 import "./App.css";
 import Keyboard from "./components/keyboard/Keyboard";
-import Knob from "./components/knob/Knob";
+import Synth from "./components/synth/Synth";
 
 var audioCtx = new AudioContext();
 
@@ -10,7 +10,7 @@ function App() {
   return (
     <div className="App">
       <div>Hello</div>
-      <Knob name="volume" width={75} />
+      <Synth />
       <Keyboard height={100} width={350} octave={octave} />
     </div>
   );
