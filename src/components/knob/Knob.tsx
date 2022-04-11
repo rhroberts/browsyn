@@ -16,6 +16,7 @@ function Knob({
   const dialLength = width * 0.2; // length of dial line
   let rot = 0; // knob rotation angle in degrees
   // const rotMax = 270; // maximum knob rotation
+  console.log(value);
   return (
     <div className={styles.knob}>
       <svg
@@ -72,7 +73,7 @@ function Knob({
         </g>
         <g
           id="knob"
-          transform={`rotate(${rot}, ${width * 0.5}, ${width * 0.5})`}
+          transform={`rotate(${value * 2}, ${width * 0.5}, ${width * 0.5})`}
         >
           <polygon
             fill="#000"
