@@ -1,22 +1,26 @@
+import { valueToRotation } from "./utils";
 import styles from "./Knob.module.css";
 
 function Knob({
   name,
-  value, // need to translate to rotation
+  value,
+  minValue,
+  maxValue,
   onMouseDown,
   width,
 }: {
   name: string;
   value: number;
+  minValue: number;
+  maxValue: number;
   onMouseDown: Function;
   width: number;
 }) {
   const oct = width * (Math.sqrt(2) / 2); // special coordinate of octagon
   const dialPad = width * 0.025; // padding distance b/w dial and knob
   const dialLength = width * 0.2; // length of dial line
-  let rot = 0; // knob rotation angle in degrees
+  // let rot = 0; // knob rotation angle in degrees
   // const rotMax = 270; // maximum knob rotation
-  console.log(value);
   return (
     <div className={styles.knob}>
       <svg
@@ -73,10 +77,14 @@ function Knob({
         </g>
         <g
           id="knob"
-          transform={`rotate(${value * 2}, ${width * 0.5}, ${width * 0.5})`}
+          transform={`rotate(${valueToRotation(value, minValue, maxValue)}, ${
+            width * 0.5
+          }, ${width * 0.5})`}
         >
           <polygon
             fill="#000"
+            stroke="#444"
+            strokeWidth={3}
             points={`${width} 0 ${oct} ${oct} 0 ${width} ${-oct} ${oct} ${-width} 0 ${-oct} ${-oct} 0 ${-width} ${oct} ${-oct}`}
             transform={`translate(${width * 0.5}, ${width * 0.5}) scale(0.4)`}
           />
