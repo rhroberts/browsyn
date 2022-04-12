@@ -12,10 +12,17 @@ function clampKnobRotation(rot: number) {
   return clamp(rot, MIN_ROT, MAX_ROT);
 }
 
-function calcKnobValue(initVal: number, initY: number, currentY: number) {
+function calcKnobValue(
+  initVal: number,
+  minVal: number,
+  maxVal: number,
+  initY: number,
+  currentY: number
+) {
   // NOTE: this obviously isn't very robust, but good enough for prototyping
-  const diff = initY - currentY;
-  return clampKnobRotation(initVal + diff);
+  // const rot = clampKnobRotation(initVal + initY - currentY);
+  // return rotationToValue(rot, minVal, maxVal);
+  return clamp(initVal + initY - currentY, minVal, maxVal);
 }
 
 function rotationToValue(rot: number, min: number, max: number) {

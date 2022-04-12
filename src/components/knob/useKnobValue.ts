@@ -2,10 +2,14 @@ import { useEffect, useState } from "react";
 import { calcKnobValue } from "./utils";
 
 export default function useKnobValue({
-  knobValue,
+  value,
+  min,
+  max,
   setKnobValue,
 }: {
-  knobValue: number;
+  value: number;
+  min: number;
+  max: number;
   setKnobValue: Function;
 }) {
   const [isActive, setIsActive] = useState(false);
@@ -22,7 +26,7 @@ export default function useKnobValue({
 
   useEffect(() => {
     const onMouseMove = (e: MouseEvent) => {
-      const newKnobValue = calcKnobValue(knobValue, initY, e.pageY);
+      const newKnobValue = calcKnobValue(value, min, max, initY, e.pageY);
       // update initial Y to that of current value
       setInitY(e.pageY);
       setKnobValue(newKnobValue);
@@ -37,6 +41,6 @@ export default function useKnobValue({
         document.body.removeEventListener("mouseup", onMouseUp);
       };
     }
-  }, [isActive, initY, knobValue, setKnobValue]);
+  }, [isActive, initY, value, min, max, setKnobValue]);
   return { onKnobMouseDown: onMouseDown };
 }
