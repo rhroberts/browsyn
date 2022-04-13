@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react";
+import { useCallback, useEffect, useReducer } from "react";
 import { calcKnobValue } from "./utils";
 
 interface StateInterface {
@@ -17,17 +17,17 @@ enum actionTypes {
 
 interface ActionInterface {
   type: actionTypes;
-  payload: MouseEvent;
+  event: MouseEvent;
 }
 
 const knobReducer =
   (onChange: Function) => (state: StateInterface, action: ActionInterface) => {
     switch (action.type) {
       case "start":
-        return { ...state, isActive: true, pageY: action.payload.pageY };
+        return { ...state, isActive: true, pageY: action.event.pageY };
       case "move":
         const { value, minValue, maxValue, pageY } = state;
-        const newPageY = action.payload.pageY;
+        const newPageY = action.event.pageY;
         const newValue = calcKnobValue(
           value,
           minValue,
@@ -65,12 +65,16 @@ export default function useKnobValue({
 
   const [state, dispatch] = useReducer(knobReducer(setKnobValue), initialState);
 
-  const onMouseDown = (e: MouseEvent) =>
-    dispatch({ type: actionTypes.start, payload: e });
+  console.log(state);
+
+  const onMouseDown = useCallback(
+    (e: MouseEvent) => dispatch({ type: actionTypes.start, event: e }),
+    []
+  );
   const onMouseUp = (e: MouseEvent) =>
-    dispatch({ type: actionTypes.stop, payload: e });
+    dispatch({ type: actionTypes.stop, event: e });
   const onMouseMove = (e: MouseEvent) =>
-    dispatch({ type: actionTypes.move, payload: e });
+    dispatch({ type: actionTypes.move, event: e });
 
   useEffect(() => {
     if (state.isActive) {
