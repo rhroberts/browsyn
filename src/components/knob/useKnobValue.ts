@@ -1,5 +1,13 @@
-import { useEffect, useState } from "react";
-import { calcKnobValue } from "./utils";
+import { useEffect, useReducer } from "react";
+import { knobReducer, knobReducerActions } from "./knobReducer";
+
+export interface StateInterface {
+  isActive: boolean;
+  pageY: number;
+  value: number;
+  minValue: number;
+  maxValue: number;
+}
 
 export default function useKnobValue({
   value,
@@ -12,26 +20,25 @@ export default function useKnobValue({
   max: number;
   setKnobValue: Function;
 }) {
-  const [isActive, setIsActive] = useState(false);
-  const [initY, setInitY] = useState(0);
-
-  const onMouseDown = (e: MouseEvent) => {
-    setIsActive(true);
-    setInitY(e.pageY);
+  const initialState: StateInterface = {
+    isActive: false,
+    pageY: 0,
+    value: value,
+    minValue: min,
+    maxValue: max,
   };
 
-  const onMouseUp = () => {
-    setIsActive(false);
-  };
+  const [state, dispatch] = useReducer(knobReducer(setKnobValue), initialState);
+
+  const onMouseDown = (e: MouseEvent) =>
+    dispatch({ type: knobReducerActions.start, payload: e });
+  const onMouseUp = (e: MouseEvent) =>
+    dispatch({ type: knobReducerActions.stop, payload: e });
+  const onMouseMove = (e: MouseEvent) =>
+    dispatch({ type: knobReducerActions.move, payload: e });
 
   useEffect(() => {
-    const onMouseMove = (e: MouseEvent) => {
-      const newKnobValue = calcKnobValue(value, min, max, initY, e.pageY);
-      // update initial Y to that of current value
-      setInitY(e.pageY);
-      setKnobValue(newKnobValue);
-    };
-    if (isActive) {
+    if (state.isActive) {
       // add listeners to document body
       document.body.addEventListener("mousemove", onMouseMove);
       document.body.addEventListener("mouseup", onMouseUp);
@@ -41,6 +48,6 @@ export default function useKnobValue({
         document.body.removeEventListener("mouseup", onMouseUp);
       };
     }
-  }, [isActive, initY, value, min, max, setKnobValue]);
+  }, [state.isActive]);
   return { onKnobMouseDown: onMouseDown };
 }
