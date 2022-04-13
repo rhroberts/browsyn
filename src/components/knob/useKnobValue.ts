@@ -20,52 +20,46 @@ interface ActionInterface {
   event: MouseEvent;
 }
 
-const knobReducer =
-  (onChange: Function) => (state: StateInterface, action: ActionInterface) => {
-    switch (action.type) {
-      case "start":
-        return { ...state, isActive: true, pageY: action.event.pageY };
-      case "move":
-        const { value, minValue, maxValue, pageY } = state;
-        const newPageY = action.event.pageY;
-        const newValue = calcKnobValue(
-          value,
-          minValue,
-          maxValue,
-          pageY,
-          newPageY
-        );
-        onChange(newValue);
-        return { ...state, pageY: newPageY, value: newValue };
-      case "stop":
-        return { ...state, isActive: false };
-      default:
-        throw new Error("Not a valid action!");
-    }
-  };
+const knobReducer = (state: StateInterface, action: ActionInterface) => {
+  switch (action.type) {
+    case "start":
+      return { ...state, isActive: true, pageY: action.event.pageY };
+    case "move":
+      const { value, minValue, maxValue, pageY } = state;
+      const newPageY = action.event.pageY;
+      const newValue = calcKnobValue(
+        value,
+        minValue,
+        maxValue,
+        pageY,
+        newPageY
+      );
+      return { ...state, pageY: newPageY, value: newValue };
+    case "stop":
+      return { ...state, isActive: false };
+    default:
+      throw new Error("Not a valid action!");
+  }
+};
 
 export default function useKnobValue({
-  value,
+  initValue,
   min,
   max,
-  setKnobValue,
 }: {
-  value: number;
+  initValue: number;
   min: number;
   max: number;
-  setKnobValue: Function;
 }) {
   const initialState: StateInterface = {
     isActive: false,
     pageY: 0,
-    value: value,
+    value: initValue,
     minValue: min,
     maxValue: max,
   };
 
-  const [state, dispatch] = useReducer(knobReducer(setKnobValue), initialState);
-
-  console.log(state);
+  const [state, dispatch] = useReducer(knobReducer, initialState);
 
   const onMouseDown = useCallback(
     (e: MouseEvent) => dispatch({ type: actionTypes.start, event: e }),
@@ -88,5 +82,5 @@ export default function useKnobValue({
       };
     }
   }, [state.isActive]);
-  return { onKnobMouseDown: onMouseDown };
+  return { knobValue: state.value, onKnobMouseDown: onMouseDown };
 }
