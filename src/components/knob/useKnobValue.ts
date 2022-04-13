@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { calcKnobValue } from "./utils";
 
 interface StateInterface {
@@ -61,10 +61,8 @@ export default function useKnobValue({
 
   const [state, dispatch] = useReducer(knobReducer, initialState);
 
-  const onMouseDown = useCallback(
-    (e: MouseEvent) => dispatch({ type: actionTypes.start, event: e }),
-    []
-  );
+  const onMouseDown = (e: MouseEvent) =>
+    dispatch({ type: actionTypes.start, event: e });
   const onMouseUp = (e: MouseEvent) =>
     dispatch({ type: actionTypes.stop, event: e });
   const onMouseMove = (e: MouseEvent) =>
