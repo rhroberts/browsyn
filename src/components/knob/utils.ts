@@ -20,8 +20,6 @@ function calcKnobValue(
   currentY: number
 ) {
   // NOTE: this obviously isn't very robust, but good enough for prototyping
-  // const rot = clampKnobRotation(initVal + initY - currentY);
-  // return rotationToValue(rot, minVal, maxVal);
   return clamp(initVal + initY - currentY, minVal, maxVal);
 }
 

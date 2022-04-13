@@ -16,6 +16,7 @@ function Synth(props: any) {
     max: maxVolume,
     setKnobValue: setVolume,
   });
+  console.log(volume);
 
   return (
     <div id={styles.synth}>
