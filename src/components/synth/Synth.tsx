@@ -1,20 +1,16 @@
-import { useState } from "react";
 import Knob from "../knob/Knob";
 import useKnobValue from "../knob/useKnobValue";
 import styles from "./Synth.module.css";
 
 function Synth(props: any) {
-  const minVolume = 0;
-  const maxVolume = 100;
-  const [volume, setVolume] = useState(50);
+  const volumeParams = { init: 50, min: 0, max: 100 };
 
-  // pass in parameter value, min, and max, and a callback for setting value
-  // returns a callback to pass down to the knob component itself
-  const { onKnobMouseDown } = useKnobValue({
-    value: volume,
-    min: minVolume,
-    max: maxVolume,
-    setKnobValue: setVolume,
+  // pass in initial parameter value, min, and max, and a callback for setting value
+  // returns value and a callback to pass down to the knob component itself
+  const { knobValue: volume, onKnobMouseDown } = useKnobValue({
+    initValue: volumeParams.init,
+    min: volumeParams.min,
+    max: volumeParams.max,
   });
 
   return (
@@ -22,8 +18,8 @@ function Synth(props: any) {
       <Knob
         name="volume"
         value={volume}
-        minValue={minVolume}
-        maxValue={maxVolume}
+        minValue={volumeParams.min}
+        maxValue={volumeParams.max}
         onMouseDown={onKnobMouseDown}
         width={75}
       />
