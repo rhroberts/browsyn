@@ -9,9 +9,9 @@ future.
 
 - [x] Virtual Keyboard
 - [ ] MIDI Input
-- [ ] Two, individually addressable oscillators
+- [ ] Two Oscillators
 - [x] Global Volume
 - [ ] ASDR Envelope
 - [ ] Low-pass Filter
-- [ ] Low-frequency oscillator
+- [ ] Low-frequency Oscillator
 - [ ] Reverb
