@@ -1,8 +1,11 @@
 const MIN_ROT = 0;
 const MAX_ROT = 270;
+const VIEWPORT_HEIGHT = Math.max(
+  document.documentElement.clientHeight || 0,
+  window.innerHeight || 0
+);
 
 function clamp(val: number, min: number, max: number) {
-  val = Math.round(val);
   if (val < min) return min;
   if (val > max) return max;
   return val;
@@ -19,8 +22,10 @@ function calcKnobValue(
   initY: number,
   currentY: number
 ) {
-  // NOTE: this obviously isn't very robust, but good enough for prototyping
-  return clamp(initVal + initY - currentY, minVal, maxVal);
+  const normVal = initVal / (maxVal - minVal);
+  const normPixDiff = (initY - currentY) / (VIEWPORT_HEIGHT / 4);
+  const val = (normVal + normPixDiff) * (maxVal - minVal) + minVal;
+  return clamp(Math.round(val * 100) / 100, minVal, maxVal);
 }
 
 function rotationToValue(rot: number, min: number, max: number) {

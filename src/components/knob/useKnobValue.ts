@@ -7,6 +7,7 @@ interface StateInterface {
   value: number;
   minValue: number;
   maxValue: number;
+  onChange: Function;
 }
 
 enum actionTypes {
@@ -34,6 +35,7 @@ const knobReducer = (state: StateInterface, action: ActionInterface) => {
         pageY,
         newPageY
       );
+      state.onChange(newValue);
       return { ...state, pageY: newPageY, value: newValue };
     case "stop":
       return { ...state, isActive: false };
@@ -46,10 +48,12 @@ export default function useKnobValue({
   initValue,
   min,
   max,
+  onChange,
 }: {
   initValue: number;
   min: number;
   max: number;
+  onChange: Function;
 }) {
   const initialState: StateInterface = {
     isActive: false,
@@ -57,6 +61,7 @@ export default function useKnobValue({
     value: initValue,
     minValue: min,
     maxValue: max,
+    onChange: onChange,
   };
 
   const [state, dispatch] = useReducer(knobReducer, initialState);

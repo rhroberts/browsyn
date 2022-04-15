@@ -1,5 +1,4 @@
 import { ReactElement } from "react";
-import { playNote } from "../../synthesizer/synthesizer";
 import styles from "./Keyboard.module.css";
 import { noteToFreq } from "./utils";
 
@@ -7,10 +6,12 @@ function Keyboard({
   height,
   width,
   octave,
+  triggerNote,
 }: {
   height: number;
   width: number;
   octave: number;
+  triggerNote: Function;
 }) {
   const keyHeight = height;
   const keyWidth = width / 15; // specific to a 25-key keyboard
@@ -42,6 +43,7 @@ function Keyboard({
         keyWidth={keyWidth}
         xPos={keyWidth * idx}
         key={`${note}${oct}`} // unique component identifier
+        triggerNote={triggerNote}
       />
     );
   });
@@ -68,6 +70,7 @@ function Keyboard({
         keyWidth={blackKeyWidth}
         xPos={keyWidth * (idx + 1 + skip) - keyWidth / 3}
         key={`${note}${oct}`} // unique component identifier
+        triggerNote={triggerNote}
       />
     );
   });
@@ -91,16 +94,18 @@ function Key({
   keyWidth,
   keyHeight,
   xPos,
+  triggerNote,
 }: {
   octave: number;
   note: string;
   keyWidth: number;
   keyHeight: number;
   xPos: number;
+  triggerNote: Function;
 }) {
   const freq = noteToFreq(octave, note);
   return (
-    <svg className={styles.key} onClick={() => playNote(freq)}>
+    <svg className={styles.key} onClick={() => triggerNote(freq)}>
       <rect x={xPos} y={0} rx={2} ry={2} width={keyWidth} height={keyHeight} />
     </svg>
   );
