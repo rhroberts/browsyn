@@ -1,3 +1,7 @@
+.knobWrapper {
+  flex-grow: 1;
+}
+
 .knob:hover {
   cursor: pointer;
 }

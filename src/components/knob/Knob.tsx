@@ -7,22 +7,21 @@ function Knob({
   minValue,
   maxValue,
   onMouseDown,
-  width,
 }: {
   name: string;
   value: number;
   minValue: number;
   maxValue: number;
   onMouseDown: Function;
-  width: number;
 }) {
+  const width = 75;
   const oct = width * (Math.sqrt(2) / 2); // special coordinate of octagon
   const dialPad = width * 0.025; // padding distance b/w dial and knob
   const dialLength = width * 0.2; // length of dial line
   // let rot = 0; // knob rotation angle in degrees
   // const rotMax = 270; // maximum knob rotation
   return (
-    <>
+    <div className={styles.knobWrapper}>
       <label className={styles.knobLabel}>{name.toUpperCase()}</label>
       <div className={styles.knob}>
         <svg
@@ -35,7 +34,7 @@ function Knob({
           <rect width="100%" height="100%" fill="transparent" />
           <g
             id="dial"
-            stroke="#fff"
+            stroke="#999"
             strokeWidth={width * 0.15}
             transform={`translate(${width * 0.5}, ${width * 0.5}) scale(0.4)`}
           >
@@ -105,7 +104,7 @@ function Knob({
           </g>
         </svg>
       </div>
-    </>
+    </div>
   );
 }
 
