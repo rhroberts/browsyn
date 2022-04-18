@@ -27,15 +27,16 @@ function Oscillator({
   type: OscillatorType;
   setType: Function;
 }) {
+  const oscSelectorId = `${name}Selector`; // css id
   useEffect(() => {
     const oscTypeEl = document.getElementById(
-      styles.selectOscType
+      oscSelectorId
     ) as HTMLInputElement;
     oscTypeEl?.addEventListener("change", () => setType(oscTypeEl.value));
     return () => {
       oscTypeEl?.removeEventListener("change", () => setType(oscTypeEl.value));
     };
-  }, [setType]);
+  }, [setType, oscSelectorId]);
 
   return (
     <div className={styles.oscillator}>
@@ -54,7 +55,7 @@ function Oscillator({
         maxValue={detuneMax}
         onMouseDown={detuneCallback}
       />
-      <select id={styles.selectOscType}>
+      <select defaultValue={type} id={oscSelectorId}>
         <option value="sine">sine</option>
         <option value="square">square</option>
         <option value="sawtooth">sawtooth</option>

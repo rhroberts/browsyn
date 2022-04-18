@@ -13,7 +13,7 @@ label {
   border-radius: 10px;
 }
 
-#selectOscType {
+.oscSelector {
   flex-grow: 1;
   /*background-color: #000;
   color: #fff;

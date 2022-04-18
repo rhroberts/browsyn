@@ -12,10 +12,11 @@ const params = {
       min: -100,
       max: 100,
     },
+    type: "sine",
   },
   osc2: {
     amount: {
-      init: 0.25,
+      init: 0.1667,
       min: 0,
       max: 0.5, // keep this low to prevent clipping
     },
@@ -24,6 +25,7 @@ const params = {
       min: -100,
       max: 100,
     },
+    type: "sawtooth",
   },
 };
 

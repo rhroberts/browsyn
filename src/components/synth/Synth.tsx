@@ -14,13 +14,21 @@ function Synth() {
       gain: params.globalVolume.init,
     })
   );
-  const osc1Ref = useRef(new OscillatorNode(audioCtxRef.current));
+  const osc1Ref = useRef(
+    new OscillatorNode(audioCtxRef.current, {
+      type: params.osc1.type as OscillatorType,
+    })
+  );
   const osc1AmountRef = useRef(
     new GainNode(audioCtxRef.current, {
       gain: params.osc1.amount.init,
     })
   );
-  const osc2Ref = useRef(new OscillatorNode(audioCtxRef.current));
+  const osc2Ref = useRef(
+    new OscillatorNode(audioCtxRef.current, {
+      type: params.osc2.type as OscillatorType,
+    })
+  );
   const osc2AmountRef = useRef(
     new GainNode(audioCtxRef.current, {
       gain: params.osc2.amount.init,
@@ -142,7 +150,7 @@ function Synth() {
         detuneMin={params.osc1.detune.min}
         detuneMax={params.osc1.detune.max}
         detuneCallback={osc1DetuneCallback}
-        type="sine"
+        type={params.osc1.type as OscillatorType}
         setType={(type: OscillatorType) => {
           osc1Ref.current.type = type;
         }}
@@ -157,7 +165,7 @@ function Synth() {
         detuneMin={params.osc2.detune.min}
         detuneMax={params.osc2.detune.max}
         detuneCallback={osc2DetuneCallback}
-        type="sine"
+        type={params.osc2.type as OscillatorType}
         setType={(type: OscillatorType) => {
           osc2Ref.current.type = type;
         }}
