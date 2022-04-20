@@ -1,0 +1,11 @@
+/* FIXME: This isn't DRY -- see Oscillator.module.css */
+.envelope {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  margin-bottom: 12px;
+  margin-top: 12px;
+  border: 2px solid #999;
+  border-radius: 10px;
+}

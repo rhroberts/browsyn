@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import Envelope from "../envelope/Envelope";
 import Keyboard from "../keyboard/Keyboard";
 import Knob from "../knob/Knob";
 import useKnobValue from "../knob/useKnobValue";
@@ -14,6 +15,8 @@ function Synth() {
       gain: params.globalVolume.init,
     })
   );
+  // TODO: Refactor to pass these down to Oscillator component as props perhaps?
+  // then move relevant useKnobValue calls into Oscillator component?
   const osc1Ref = useRef(
     new OscillatorNode(audioCtxRef.current, {
       type: params.osc1.type as OscillatorType,
@@ -170,6 +173,7 @@ function Synth() {
           osc2Ref.current.type = type;
         }}
       />
+      <Envelope name="env" />
       <Keyboard
         height={150}
         width={500}
