@@ -9,30 +9,29 @@ import styles from "./Synth.module.css";
 
 function Synth() {
   // to persist across renders, make these refs
+  // for audio, it's crucial these don't change unnecessarily
   var audioCtxRef = useRef(new AudioContext());
-  const volumeRef = useRef(
+  const globalVolume = useRef(
     new GainNode(audioCtxRef.current, {
       gain: params.globalVolume.init,
     })
   );
-  // TODO: Refactor to pass these down to Oscillator component as props perhaps?
-  // then move relevant useKnobValue calls into Oscillator component?
-  const osc1Ref = useRef(
+  const osc1 = useRef(
     new OscillatorNode(audioCtxRef.current, {
       type: params.osc1.type as OscillatorType,
     })
   );
-  const osc1AmountRef = useRef(
+  const osc1Amount = useRef(
     new GainNode(audioCtxRef.current, {
       gain: params.osc1.amount.init,
     })
   );
-  const osc2Ref = useRef(
+  const osc2 = useRef(
     new OscillatorNode(audioCtxRef.current, {
       type: params.osc2.type as OscillatorType,
     })
   );
-  const osc2AmountRef = useRef(
+  const osc2Amount = useRef(
     new GainNode(audioCtxRef.current, {
       gain: params.osc2.amount.init,
     })
@@ -47,59 +46,7 @@ function Synth() {
       min: params.globalVolume.min,
       max: params.globalVolume.max,
       onChange: (value: number) => {
-        volumeRef.current.gain.setValueAtTime(
-          value,
-          audioCtxRef.current.currentTime
-        );
-      },
-    });
-
-  const { knobValue: osc1Amount, onKnobMouseDown: osc1AmountCallback } =
-    useKnobValue({
-      initValue: params.osc1.amount.init,
-      min: params.osc1.amount.min,
-      max: params.osc1.amount.max,
-      onChange: (value: number) => {
-        osc1AmountRef.current.gain.setValueAtTime(
-          value,
-          audioCtxRef.current.currentTime
-        );
-      },
-    });
-
-  const { knobValue: osc1Detune, onKnobMouseDown: osc1DetuneCallback } =
-    useKnobValue({
-      initValue: params.osc1.detune.init,
-      min: params.osc1.detune.min,
-      max: params.osc1.detune.max,
-      onChange: (value: number) => {
-        osc1Ref.current.detune.setValueAtTime(
-          value,
-          audioCtxRef.current.currentTime
-        );
-      },
-    });
-
-  const { knobValue: osc2Amount, onKnobMouseDown: osc2AmountCallback } =
-    useKnobValue({
-      initValue: params.osc2.amount.init,
-      min: params.osc2.amount.min,
-      max: params.osc2.amount.max,
-      onChange: (value: number) => {
-        osc2AmountRef.current.gain.setValueAtTime(
-          value,
-          audioCtxRef.current.currentTime
-        );
-      },
-    });
-
-  const { knobValue: osc2Detune, onKnobMouseDown: osc2DetuneCallback } =
-    useKnobValue({
-      initValue: params.osc2.detune.init,
-      min: params.osc2.detune.min,
-      max: params.osc2.detune.max,
-      onChange: (value: number) => {
-        osc2Ref.current.detune.setValueAtTime(
+        globalVolume.current.gain.setValueAtTime(
           value,
           audioCtxRef.current.currentTime
         );
@@ -109,29 +56,29 @@ function Synth() {
   // callback for playing a note
   const triggerNote = (freq: number) => {
     // osc1 chain
-    osc1Ref.current = new OscillatorNode(audioCtxRef.current, {
-      type: osc1Ref.current.type,
+    osc1.current = new OscillatorNode(audioCtxRef.current, {
+      type: osc1.current.type,
       frequency: freq,
-      detune: osc1Detune,
+      detune: osc1.current.detune.value,
     });
-    osc1Ref.current
-      .connect(osc1AmountRef.current)
-      .connect(volumeRef.current)
+    osc1.current
+      .connect(osc1Amount.current)
+      .connect(globalVolume.current)
       .connect(audioCtxRef.current.destination);
-    osc1Ref.current.start(audioCtxRef.current.currentTime);
-    osc1Ref.current.stop(audioCtxRef.current.currentTime + 2);
+    osc1.current.start(audioCtxRef.current.currentTime);
+    osc1.current.stop(audioCtxRef.current.currentTime + 2);
     // osc2 chain
-    osc2Ref.current = new OscillatorNode(audioCtxRef.current, {
-      type: osc2Ref.current.type,
+    osc2.current = new OscillatorNode(audioCtxRef.current, {
+      type: osc2.current.type,
       frequency: freq,
-      detune: osc2Detune,
+      detune: osc2.current.detune.value,
     });
-    osc2Ref.current
-      .connect(osc2AmountRef.current)
-      .connect(volumeRef.current)
+    osc2.current
+      .connect(osc2Amount.current)
+      .connect(globalVolume.current)
       .connect(audioCtxRef.current.destination);
-    osc2Ref.current.start(audioCtxRef.current.currentTime);
-    osc2Ref.current.stop(audioCtxRef.current.currentTime + 2);
+    osc2.current.start(audioCtxRef.current.currentTime);
+    osc2.current.stop(audioCtxRef.current.currentTime + 2);
   };
 
   return (
@@ -145,33 +92,15 @@ function Synth() {
       />
       <Oscillator
         name="osc1"
-        amount={osc1Amount}
-        amountMin={params.osc1.amount.min}
-        amountMax={params.osc1.amount.max}
-        amountCallback={osc1AmountCallback}
-        detune={osc1Detune}
-        detuneMin={params.osc1.detune.min}
-        detuneMax={params.osc1.detune.max}
-        detuneCallback={osc1DetuneCallback}
-        type={params.osc1.type as OscillatorType}
-        setType={(type: OscillatorType) => {
-          osc1Ref.current.type = type;
-        }}
+        params={params.osc1}
+        oscNode={osc1}
+        gainNode={osc1Amount}
       />
       <Oscillator
         name="osc2"
-        amount={osc2Amount}
-        amountMin={params.osc2.amount.min}
-        amountMax={params.osc2.amount.max}
-        amountCallback={osc2AmountCallback}
-        detune={osc2Detune}
-        detuneMin={params.osc2.detune.min}
-        detuneMax={params.osc2.detune.max}
-        detuneCallback={osc2DetuneCallback}
-        type={params.osc2.type as OscillatorType}
-        setType={(type: OscillatorType) => {
-          osc2Ref.current.type = type;
-        }}
+        params={params.osc2}
+        oscNode={osc2}
+        gainNode={osc2Amount}
       />
       <Envelope name="env" />
       <Keyboard

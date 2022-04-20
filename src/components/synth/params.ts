@@ -12,7 +12,7 @@ const params = {
       min: -100,
       max: 100,
     },
-    type: "sine",
+    type: "sine" as OscillatorType,
   },
   osc2: {
     amount: {
@@ -25,7 +25,7 @@ const params = {
       min: -100,
       max: 100,
     },
-    type: "sawtooth",
+    type: "sawtooth" as OscillatorType,
   },
 };
 
