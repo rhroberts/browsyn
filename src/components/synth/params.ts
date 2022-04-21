@@ -1,6 +1,6 @@
 const params = {
   globalVolume: { init: 0.5, min: 0, max: 1 },
-  keyboardOctave: 2,
+  keyboardOctave: 3,
   osc1: {
     amount: {
       init: 0.5,
@@ -26,6 +26,14 @@ const params = {
       max: 100,
     },
     type: "sawtooth" as OscillatorType,
+  },
+  lfo: {
+    freq: {
+      init: 6.666,
+      min: 0,
+      max: 20,
+    },
+    type: "sine" as OscillatorType,
   },
   env: {
     attack: {

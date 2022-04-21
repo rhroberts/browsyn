@@ -71,7 +71,7 @@ export default function useKnobValue({
 
   const onMouseDown = (e: MouseEvent) =>
     dispatch({ type: actionTypes.start, event: e });
-  const onMouseUp = (e: MouseEvent) =>
+  const onMouseUpOrLeave = (e: MouseEvent) =>
     dispatch({ type: actionTypes.stop, event: e });
   const onMouseMove = (e: MouseEvent) =>
     dispatch({ type: actionTypes.move, event: e });
@@ -80,11 +80,13 @@ export default function useKnobValue({
     if (state.isActive) {
       // add listeners to document body
       document.body.addEventListener("mousemove", onMouseMove);
-      document.body.addEventListener("mouseup", onMouseUp);
+      document.body.addEventListener("mouseup", onMouseUpOrLeave);
+      document.body.addEventListener("mouseleave", onMouseUpOrLeave);
       // provide function to clean up listeners
       return () => {
         document.body.removeEventListener("mousemove", onMouseMove);
-        document.body.removeEventListener("mouseup", onMouseUp);
+        document.body.removeEventListener("mouseup", onMouseUpOrLeave);
+        document.body.removeEventListener("mouseleave", onMouseUpOrLeave);
       };
     }
   }, [state.isActive]);

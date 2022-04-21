@@ -1,4 +1,4 @@
-#globalVolume {
+#lfo {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -7,6 +7,5 @@
   border: 2px solid #999;
   border-radius: 10px;
   flex-grow: 1;
-  margin-right: 6px;
   margin-left: 6px;
 }

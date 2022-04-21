@@ -14,7 +14,7 @@ function Volume({
   params: VolumeParams;
   gainNode: GainNode;
 }) {
-  const { knobValue: volume, onKnobMouseDown } = useKnobValue({
+  const { knobValue, onKnobMouseDown } = useKnobValue({
     initValue: params.init,
     min: params.min,
     max: params.max,
@@ -26,7 +26,7 @@ function Volume({
     <div id={styles.globalVolume}>
       <Knob
         name="volume"
-        value={volume}
+        value={knobValue}
         minValue={params.min}
         maxValue={params.max}
         onMouseDown={onKnobMouseDown}

@@ -13,7 +13,7 @@ future.
 - [ ] MIDI Input
 - [x] Two Oscillators
 - [x] Global Volume
-- [x] ADSR Envelope
+- [x] Amplitude Envelope (ADSR)
 - [ ] Low-pass Filter
-- [ ] Low-frequency Oscillator
+- [x] Low-frequency Oscillator
 - [ ] Convolution Reverb

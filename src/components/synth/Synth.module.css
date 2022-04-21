@@ -1,2 +1,6 @@
 #synth {
 }
+
+#globalParamWrapper {
+  display: flex;
+}

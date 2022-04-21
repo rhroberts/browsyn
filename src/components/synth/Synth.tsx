@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import Envelope from "../envelope/Envelope";
 import Keyboard from "../keyboard/Keyboard";
+import LFOscillator from "../lfo/LFOscillator";
 import Octave from "../octave/Octave";
 import Oscillator from "../oscillator/Oscillator";
 import Volume from "../volume/Volume";
@@ -21,6 +22,7 @@ const osc2Amount = new GainNode(audioCtx, {
 const ampEnvelope = new GainNode(audioCtx, {
   gain: 0, // distinct from knob value, we always want amp envelope to start at 0
 });
+const lfOscGain = new GainNode(audioCtx);
 
 // the main synthesizer component
 function Synth() {
@@ -30,12 +32,18 @@ function Synth() {
   // time a note is triggered
   const osc1 = useRef(
     new OscillatorNode(audioCtx, {
-      type: params.osc1.type as OscillatorType,
+      type: params.osc1.type,
     })
   );
   const osc2 = useRef(
     new OscillatorNode(audioCtx, {
-      type: params.osc2.type as OscillatorType,
+      type: params.osc2.type,
+    })
+  );
+  const lfOsc = useRef(
+    new OscillatorNode(audioCtx, {
+      frequency: params.lfo.freq.init,
+      type: params.lfo.type,
     })
   );
   const env = useRef({
@@ -50,6 +58,7 @@ function Synth() {
     // disconnect previous oscillators, to create monophonic behavior
     osc1.current.disconnect();
     osc2.current.disconnect();
+    lfOsc.current.disconnect();
     // set note start time
     const time = audioCtx.currentTime;
     const noteLength =
@@ -63,6 +72,13 @@ function Synth() {
       time + env.current.attack + env.current.decay
     );
     ampEnvelope.gain.linearRampToValueAtTime(0, time + noteLength);
+    // LFO
+    lfOscGain.gain.setValueAtTime(1, time);
+    lfOsc.current = new OscillatorNode(audioCtx, {
+      type: lfOsc.current.type,
+      frequency: lfOsc.current.frequency.value,
+    });
+    lfOsc.current.connect(lfOscGain.gain);
     // osc1 chain
     osc1.current = new OscillatorNode(audioCtx, {
       type: osc1.current.type,
@@ -71,6 +87,7 @@ function Synth() {
     });
     osc1.current
       .connect(osc1Amount)
+      .connect(lfOscGain)
       .connect(ampEnvelope)
       .connect(globalVolume)
       .connect(audioCtx.destination);
@@ -82,25 +99,35 @@ function Synth() {
     });
     osc2.current
       .connect(osc2Amount)
+      .connect(lfOscGain)
       .connect(ampEnvelope)
       .connect(globalVolume)
       .connect(audioCtx.destination);
     // start/stop oscillators
+    lfOsc.current.start(time);
+    lfOsc.current.stop(time + noteLength);
     osc1.current.start(time);
-    osc2.current.start(audioCtx.currentTime);
+    osc2.current.start(time);
     osc1.current.stop(time + noteLength);
-    osc2.current.stop(audioCtx.currentTime + noteLength);
+    osc2.current.stop(time + noteLength);
   };
-  console.log(octave);
 
   return (
     <div id={styles.synth}>
-      <Volume params={params.globalVolume} gainNode={globalVolume} />
-      <Octave
-        name="octave"
-        octave={params.keyboardOctave}
-        setOctave={setOctave}
-      />
+      <div id={styles.globalParamWrapper}>
+        <Octave
+          name="octave"
+          octave={params.keyboardOctave}
+          setOctave={setOctave}
+        />
+        <Volume params={params.globalVolume} gainNode={globalVolume} />
+        <LFOscillator
+          params={params.lfo}
+          setFreq={(value: number) => {
+            lfOsc.current.frequency.value = value;
+          }}
+        />
+      </div>
       <Oscillator
         name="osc1"
         params={params.osc1}
