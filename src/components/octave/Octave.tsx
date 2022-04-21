@@ -25,7 +25,7 @@ function Octave({
   }, [setOctave]);
   return (
     <div className={styles.octaveWrapper}>
-      <label>{name}</label>
+      <label>{name.toUpperCase()}</label>
       <select defaultValue={octave} id={styles.octaveSelector}>
         <option value={0}>0</option>
         <option value={1}>1</option>
