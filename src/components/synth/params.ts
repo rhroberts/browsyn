@@ -27,6 +27,29 @@ const params = {
     },
     type: "sawtooth" as OscillatorType,
   },
+  env: {
+    attack: {
+      init: 0,
+      min: 0,
+      max: 1,
+    },
+    decay: {
+      init: 0.3333,
+      min: 0,
+      max: 1,
+    },
+    sustain: {
+      // pertains to gain level (all other env params are temporal)
+      init: 0.5,
+      min: 0,
+      max: 1,
+    },
+    release: {
+      init: 0.3333,
+      min: 0,
+      max: 1,
+    },
+  },
 };
 
 export default params;

@@ -1,3 +1,6 @@
+// Custom hook change value and set proper callbacks for Knob component
+// We pass in initial parameter value, min, and max, and a callback for setting value
+// useKnobValue returns value and a callback to pass down to the knob component itself
 import { useEffect, useReducer } from "react";
 import { calcKnobValue } from "./utils";
 

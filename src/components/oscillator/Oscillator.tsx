@@ -26,7 +26,7 @@ function Oscillator({
   name: string;
   params: OscillatorParams;
   oscNode: MutableRefObject<OscillatorNode>;
-  gainNode: MutableRefObject<GainNode>;
+  gainNode: GainNode;
 }) {
   const { amount, detune, type } = params;
   const { knobValue: knobAmount, onKnobMouseDown: knobAmountCallback } =
@@ -35,7 +35,7 @@ function Oscillator({
       min: amount.min,
       max: amount.max,
       onChange: (value: number) => {
-        gainNode.current.gain.value = value;
+        gainNode.gain.value = value;
       },
     });
 
