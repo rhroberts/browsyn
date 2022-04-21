@@ -1,6 +1,7 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Envelope from "../envelope/Envelope";
 import Keyboard from "../keyboard/Keyboard";
+import Octave from "../octave/Octave";
 import Oscillator from "../oscillator/Oscillator";
 import Volume from "../volume/Volume";
 import params from "./params";
@@ -23,6 +24,7 @@ const ampEnvelope = new GainNode(audioCtx, {
 
 // the main synthesizer component
 function Synth() {
+  const [octave, setOctave] = useState(params.keyboardOctave);
   // these need to persist and get recreated in triggerNote so we define them here
   // oscillators can't be `start()`ed more than once, so we just recreate them each
   // time a note is triggered
@@ -89,10 +91,16 @@ function Synth() {
     osc1.current.stop(time + noteLength);
     osc2.current.stop(audioCtx.currentTime + noteLength);
   };
+  console.log(octave);
 
   return (
     <div id={styles.synth}>
       <Volume params={params.globalVolume} gainNode={globalVolume} />
+      <Octave
+        name="octave"
+        octave={params.keyboardOctave}
+        setOctave={setOctave}
+      />
       <Oscillator
         name="osc1"
         params={params.osc1}
@@ -109,7 +117,7 @@ function Synth() {
       <Keyboard
         height={150}
         width={500}
-        octave={params.keyboardOctave}
+        octave={octave}
         triggerNote={triggerNote}
       />
     </div>

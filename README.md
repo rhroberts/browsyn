@@ -11,9 +11,9 @@ future.
 
 - [x] Virtual Keyboard
 - [ ] MIDI Input
-- [ ] Two Oscillators
+- [x] Two Oscillators
 - [x] Global Volume
-- [ ] ASDR Envelope
+- [x] ADSR Envelope
 - [ ] Low-pass Filter
 - [ ] Low-frequency Oscillator
-- [ ] Reverb
+- [ ] Convolution Reverb

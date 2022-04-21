@@ -1,0 +1,8 @@
+#octaveSelector {
+}
+
+.octaveWrapper {
+  display: flex;
+  flex-direction: column;
+  font-size: medium;
+}

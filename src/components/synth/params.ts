@@ -1,6 +1,6 @@
 const params = {
   globalVolume: { init: 0.5, min: 0, max: 1 },
-  keyboardOctave: 3,
+  keyboardOctave: 2,
   osc1: {
     amount: {
       init: 0.5,
